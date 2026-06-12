@@ -1,0 +1,46 @@
+# Maven
+target/
+*.class
+*.jar
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Spring Boot
+*.log
+spring.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment — never commit secrets
+*.env
+.env
+application-local.yml
+# Maven
+target/
+*.class
+*.jar
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Spring Boot
+*.log
+spring.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+*.env
+.env
+application-local.yml

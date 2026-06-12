@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: supplier-mocks
+
+supplier:
+  c:
+    output-dir: /tmp/smartsupply/drop
+    schedule: 60000
