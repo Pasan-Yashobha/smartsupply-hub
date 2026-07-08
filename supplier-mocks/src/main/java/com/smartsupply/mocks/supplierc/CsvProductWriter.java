@@ -27,7 +27,7 @@ public class CsvProductWriter {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
-    public void writeProductFile() throws IOException {
+    public void writeProductFile() {
         try {
             Path dirPath = Paths.get(outputDir);
             Files.createDirectories(dirPath);
