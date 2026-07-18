@@ -2,6 +2,9 @@ spring:
   application:
     name: supplier-mocks
 
+server:
+  port: 8085
+
 supplier:
   c:
     output-dir: /tmp/smartsupply/drop

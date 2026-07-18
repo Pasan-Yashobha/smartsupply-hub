@@ -1,5 +1,6 @@
 package com.smartsupply.mocks.shared;
 
+import com.smartsupply.mocks.suppliera.ProductResponse;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -22,6 +23,18 @@ public class FakeProductFactory {
             "Dry Goods", "Cooking Essentials", "Beverages",
             "Canned Goods", "Dairy"
     );
+
+    public static ProductResponse buildProductResponse() {
+        return ProductResponse.builder()
+                .productId("P-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase())
+                .name(NAMES.get(RANDOM.nextInt(NAMES.size())))
+                .category(CATEGORIES.get(RANDOM.nextInt(CATEGORIES.size())))
+                .price(RANDOM.nextInt(901) + 100)
+                .stockQuantity(RANDOM.nextInt(491) + 10)
+                .supplier("SUPPLIER_A")
+                .source("SUPPLIER_A_REST")
+                .build();
+    }
 
     public  static String[] buildCsvRow() {
         return new String[]{
