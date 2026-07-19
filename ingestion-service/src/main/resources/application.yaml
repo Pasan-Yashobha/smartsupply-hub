@@ -3,18 +3,20 @@ spring:
     name: ingestion-service
 
 server:
-  port:
-    8081
+  port: 8081
 
 camel:
   springboot:
     main-run-controller: true
 
 kafka:
-  bootstrap-severs: localhost:9092
+  bootstrap-servers: localhost:9092
   topic:
     product-updates: product-updates
 
 supplier:
+  a:
+    rest:
+      api: http://localhost:8085/api/v1/supplier-a/products
   c:
     drop-dir: /tmp/smartsupply/drop

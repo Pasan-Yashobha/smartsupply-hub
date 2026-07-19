@@ -24,7 +24,7 @@ public class SupplierCFileRoute extends RouteBuilder {
     @Value("${kafka.topic.product-updates}")
     private String kafkaTopic;
 
-    @Value("${kafka.bootstrap-severs}")
+    @Value("${kafka.bootstrap-servers}")
     private String kafkaBootsrapServers;
 
     @Override
