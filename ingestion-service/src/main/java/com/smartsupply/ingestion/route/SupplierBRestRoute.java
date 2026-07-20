@@ -2,7 +2,7 @@ package com.smartsupply.ingestion.route;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartsupply.ingestion.model.ProductEvent;
-import com.smartsupply.ingestion.processor.SupplierAProductProcessor;
+import com.smartsupply.ingestion.processor.SupplierBProductProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
@@ -10,15 +10,15 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
+@Slf4j
 @RequiredArgsConstructor
-public class SupplierARestRoute extends RouteBuilder {
+public class SupplierBRestRoute extends RouteBuilder {
 
-    private final SupplierAProductProcessor supplierAProductProcessor;
+    private final SupplierBProductProcessor supplierBProductProcessor;
     private final ObjectMapper objectMapper;
 
-    @Value("${supplier.a.rest.api}")
+    @Value("${supplier.b.rest.api}")
     private String apiUrl;
 
     @Value("${kafka.topic.product-updates}")
@@ -31,17 +31,17 @@ public class SupplierARestRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         onException(Exception.class)
-                .log("Error processing Supplier A response: ${exception.message}")
+                .log("Error processing Supplier B response: ${exception.message}")
                 .handled(true);
 
-        from("timer://supplier-a-timer?period=120000")
-                .routeId("supplier-a-rest-api-route")
-                .log("Polling Supplier A REST API")
+        from("timer://supplier-b-timer?period=120000")
+                .routeId("supplier-b-rest-api-route")
+                .log("Polling Supplier B REST API")
                 .to(apiUrl)
                 .unmarshal().json(JsonLibrary.Jackson, java.util.List.class)
                 .split(body())
                 .marshal().json(JsonLibrary.Jackson)
-                .process(supplierAProductProcessor)
+                .process(supplierBProductProcessor)
                 .filter(simple("${body} != null && ${body.class.simpleName} == 'ProductEvent'"))
                 .process(exchange -> {
                     ProductEvent event = exchange.getIn().getBody(ProductEvent.class);
@@ -52,7 +52,6 @@ public class SupplierARestRoute extends RouteBuilder {
                         "?brokers=" + kafkaBootstrapServers +
                         "&valueSerializer=org.apache.kafka.common.serialization.StringSerializer"
                 )
-                .log("Published Supplier A product to Kafka: ${body}");
-
+                .log("Published Supplier B product to Kafka: ${body}");
     }
 }

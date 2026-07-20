@@ -18,5 +18,8 @@ supplier:
   a:
     rest:
       api: http://localhost:8085/api/v1/supplier-a/products
+  b:
+    rest:
+      api: http://localhost:8085/api/v1/supplier-b/products
   c:
     drop-dir: /tmp/smartsupply/drop

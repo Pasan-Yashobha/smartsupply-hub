@@ -5,7 +5,6 @@ import com.smartsupply.ingestion.model.ProductEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
-import org.apache.camel.ExchangePropertyKey;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RestProductProcessor implements Processor {
+public class SupplierAProductProcessor implements Processor {
 
     private final ObjectMapper objectMapper;
 
