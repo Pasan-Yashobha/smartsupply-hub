@@ -19,3 +19,29 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+
+  postgres:
+    image: postgres:16
+    container_name: smartsupply-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: smartsupply
+      POSTGRES_USER: smartsupply
+      POSTGRES_PASSWORD: smartsupply123
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  mongodb:
+    image: mongo:7
+    container_name: smartsupply-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: smartsupply_events
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  postgres-data:
+  mongo-data:
