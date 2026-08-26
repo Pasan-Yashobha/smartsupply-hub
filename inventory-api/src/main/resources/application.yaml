@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: inventory-api
+  mvc:
+    pathmatch:
+      use-suffix-pattern: false
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/smartsupply
+    username: smartsupply
+    password: smartsupply123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+
+server:
+  port: 8083
+
+jwt:
+  secret: smartsupply-hub-secret-key-for-jwt-signing-minimum-256-bits
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  use-management-port: false
