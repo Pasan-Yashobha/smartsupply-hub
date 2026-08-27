@@ -16,7 +16,7 @@ This project mirrors real enterprise integration consultant work at companies li
 
 ## Architecture
 
-![Architecture](docs/Smart Supply Hub - Architecture.png)
+![Architecture](docs/Architecture.png)
 
 | Layer | Technology | Port |
 |---|---|---|
