@@ -2,6 +2,7 @@ package com.smartsupply.inventory.controller;
 
 import com.smartsupply.inventory.dto.ProductResponseDto;
 import com.smartsupply.inventory.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
