@@ -1,0 +1,141 @@
+name: SmartSupply Hub CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-supplier-mocks:
+    name: Build supplier-mocks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('supplier-mocks/pom.xml') }}
+
+      - name: Build supplier-mocks
+        run: |
+          cd supplier-mocks
+          ./mvnw clean package -DskipTests
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: supplier-mocks-jar
+          path: supplier-mocks/target/*.jar
+
+  build-ingestion-service:
+    name: Build ingestion-service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('ingestion-service/pom.xml') }}
+
+      - name: Build ingestion-service
+        run: |
+          cd ingestion-service
+          ./mvnw clean package -DskipTests
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: ingestion-service-jar
+          path: ingestion-service/target/*.jar
+
+  build-enrichment-service:
+    name: Build enrichment-service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('enrichment-service/pom.xml') }}
+
+      - name: Build enrichment-service
+        run: |
+          cd enrichment-service
+          ./mvnw clean package -DskipTests
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: enrichment-service-jar
+          path: enrichment-service/target/*.jar
+
+  build-inventory-api:
+    name: Build inventory-api
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('inventory-api/pom.xml') }}
+
+      - name: Build inventory-api
+        run: |
+          cd inventory-api
+          ./mvnw clean package -DskipTests
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: inventory-api-jar
+          path: inventory-api/target/*.jar
+
+  all-builds-passed:
+    name: All builds passed
+    runs-on: ubuntu-latest
+    needs:
+      - build-supplier-mocks
+      - build-ingestion-service
+      - build-enrichment-service
+      - build-inventory-api
+    steps:
+      - name: Summary
+        run: |
+          echo "supplier-mocks built successfully"
+          echo "ingestion-service built successfully"
+          echo "enrichment-service built successfully"
+          echo "inventory-api built successfully"
+          echo "SmartSupply Hub CI passed"
