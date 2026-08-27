@@ -5,6 +5,7 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    restart: unless-stopped
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
@@ -16,9 +17,11 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    restart: unless-stopped
 
   postgres:
     image: postgres:16
@@ -31,6 +34,7 @@ services:
       POSTGRES_PASSWORD: smartsupply123
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
 
   mongodb:
     image: mongo:7
@@ -41,7 +45,83 @@ services:
       MONGO_INITDB_DATABASE: smartsupply_events
     volumes:
       - mongo-data:/data/db
+    restart: unless-stopped
+
+  supplier-mocks:
+    build:
+      context: ../supplier-mocks
+      dockerfile: Dockerfile
+    container_name: supplier-mocks
+    ports:
+      - "8085:8085"
+    environment:
+      SERVER_PORT: 8085
+      SUPPLIER_C_OUTPUT_DIR: /tmp/smartsupply/drop
+      SUPPLIER_C_SCHEDULE: 60000
+    volumes:
+      - csv-drop:/tmp/smartsupply/drop
+    restart: unless-stopped
+
+  ingestion-service:
+    build:
+      context: ../ingestion-service
+      dockerfile: Dockerfile
+    container_name: ingestion-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+      - supplier-mocks
+    environment:
+      SERVER_PORT: 8081
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SUPPLIER_A_REST_API: http://supplier-mocks:8085/api/v1/supplier-a/products
+      SUPPLIER_B_REST_API: http://supplier-mocks:8085/api/v1/supplier-b/products
+      SUPPLIER_C_DROP_DIR: /tmp/smartsupply/drop
+    volumes:
+      - csv-drop:/tmp/smartsupply/drop
+    restart: unless-stopped
+
+  enrichment-service:
+    build:
+      context: ../enrichment-service
+      dockerfile: Dockerfile
+    container_name: enrichment-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - kafka
+      - postgres
+      - mongodb
+    environment:
+      SERVER_PORT: 8082
+      SPRING_DATASOURCE_URL: jdbc:postgresql://smartsupply-postgres:5432/smartsupply
+      SPRING_DATASOURCE_USERNAME: smartsupply
+      SPRING_DATASOURCE_PASSWORD: smartsupply123
+      SPRING_DATA_MONGODB_URI: mongodb://smartsupply-mongodb:27017/smartsupply_events
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    restart: unless-stopped
+
+  inventory-api:
+    build:
+      context: ../inventory-api
+      dockerfile: Dockerfile
+    container_name: inventory-api
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+      - enrichment-service
+    environment:
+      SERVER_PORT: 8083
+      SPRING_DATASOURCE_URL: jdbc:postgresql://smartsupply-postgres:5432/smartsupply
+      SPRING_DATASOURCE_USERNAME: smartsupply
+      SPRING_DATASOURCE_PASSWORD: smartsupply123
+      JWT_SECRET: smartsupply-hub-secret-key-for-jwt-signing-minimum-256-bits
+      JWT_EXPIRATION: 86400000
+    restart: unless-stopped
 
 volumes:
   postgres-data:
   mongo-data:
+  csv-drop:
