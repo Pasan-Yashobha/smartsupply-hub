@@ -187,7 +187,7 @@ const Login = ({ onLogin }) => {
     {
       icon: <Database size={14} color="#60a5fa" />,
       label: 'Enriched products',
-      value: '620 records'
+      value: '15 records'
     },
     {
       icon: <Users size={14} color="#4ade80" />,
@@ -317,7 +317,7 @@ const Login = ({ onLogin }) => {
                   lineHeight: '1.7'
                 }}
               >
-                Three suppliers. One Kafka stream. 620 enriched products.
+                Three suppliers. One Kafka stream. 15 enriched products.
                 Full visibility into every event flowing through your supply
                 chain.
               </div>
