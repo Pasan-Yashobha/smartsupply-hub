@@ -1,0 +1,16 @@
+<svg width="100%" viewBox="0 0 680 164.78" role="img" style="" xmlns="http://www.w3.org/2000/svg">
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">SmartSupply Hub text logo</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">SmartSupply Hub text-only wordmark logo.</desc>
+
+<defs>
+  <linearGradient id="wg3" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#f1f5f9"/>
+    <stop offset="100%" stop-color="#94a3b8"/>
+  </linearGradient>
+</defs>
+
+<text x="40" y="88" font-family="'Inter','Segoe UI',sans-serif" font-size="62" font-weight="800" letter-spacing="-2" fill="url(#wg3)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Inter, &quot;Segoe UI&quot;, sans-serif;font-size:62px;font-weight:800;text-anchor:start;dominant-baseline:auto">SmartSupply</text>
+
+<text x="46" y="140" font-family="'Inter','Segoe UI',sans-serif" font-size="58" font-weight="200" letter-spacing="22" fill="#60a5fa" style="fill:rgb(96, 165, 250);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Inter, &quot;Segoe UI&quot;, sans-serif;font-size:58px;font-weight:200;text-anchor:start;dominant-baseline:auto">Hub</text>
+
+</svg>

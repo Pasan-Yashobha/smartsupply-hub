@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,20 +24,34 @@ public class EnrichmentService {
 
         double margin = event.getPrice() * 0.2;
 
-        EnrichedProduct enrichedProduct = EnrichedProduct.builder()
-                .productId(event.getProductId())
-                .name(event.getName())
-                .category(event.getCategory())
-                .price(event.getPrice())
-                .stockQuantity(event.getStockQuantity())
-                .supplier(event.getSupplier())
-                .source(event.getSource())
-                .margin(margin)
-                .build();
+        Optional<EnrichedProduct> existing = productRepository.findByProductId(event.getProductId());
+
+        EnrichedProduct enrichedProduct;
+
+        if (existing.isPresent()) {
+            enrichedProduct = existing.get();
+            enrichedProduct.setName(event.getName());
+            enrichedProduct.setCategory(event.getCategory());
+            enrichedProduct.setPrice(event.getPrice());
+            enrichedProduct.setStockQuantity(event.getStockQuantity());
+            enrichedProduct.setSupplier(event.getSupplier());
+            enrichedProduct.setSource(event.getSource());
+            enrichedProduct.setMargin(margin);
+        } else {
+            enrichedProduct = EnrichedProduct.builder()
+                    .productId(event.getProductId())
+                    .name(event.getName())
+                    .category(event.getCategory())
+                    .price(event.getPrice())
+                    .stockQuantity(event.getStockQuantity())
+                    .supplier(event.getSupplier())
+                    .source(event.getSource())
+                    .margin(margin)
+                    .build();
+        }
 
         productRepository.save(enrichedProduct);
-        log.info("Saved enriched product: {} - {}",
-                enrichedProduct.getProductId(), enrichedProduct.getName());
+        log.info("Saved enriched product: {} - {}", enrichedProduct.getProductId(), enrichedProduct.getName());
 
         RawEvent rawEvent = RawEvent.builder()
                 .rawJson(rawJson)
@@ -46,7 +61,6 @@ public class EnrichmentService {
 
         rawEventRepository.save(rawEvent);
         log.info("Saved raw event for source: {}", rawEvent.getSource());
-
     }
 
 
