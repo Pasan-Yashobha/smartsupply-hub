@@ -138,3 +138,24 @@ regenerate files.
 
 **Trade-off:** In production, files should be moved to an archive folder
 using `move=.done` to prevent reprocessing after service restarts.
+
+---
+
+## 9. Why a fixed product catalog with stable IDs
+
+**Decision:** Replace random UUID-based product IDs with a fixed catalog
+of 15 products across three suppliers using stable prefixed IDs
+(PA-001 to PA-005, PB-001 to PB-005, PC-001 to PC-005).
+
+**Reasoning:**
+Random UUIDs caused unbounded database growth because the enrichment
+service could never match incoming events to existing records. Every
+poll inserted new rows instead of updating existing ones. A fixed catalog
+with deterministic IDs enables proper upsert behaviour - the same product
+is always updated, never duplicated. Each supplier owns a completely
+separate ID range to prevent cross-supplier overwrites.
+
+**Trade-off:** A real supplier system would have its own stable product
+catalogue. This fixed catalog simulates that behaviour for development
+and demonstration purposes.
+

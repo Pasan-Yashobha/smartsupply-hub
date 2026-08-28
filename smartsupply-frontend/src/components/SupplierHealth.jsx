@@ -3,7 +3,7 @@ import {
   XCircle,
   Globe,
   FileText,
-  Activity
+  Workflow
 } from 'lucide-react';
 
 const suppliers = [
@@ -18,7 +18,7 @@ const suppliers = [
   {
     id: 'supplier-b',
     name: 'Supplier B',
-    type: 'REST API — diff schema',
+    type: 'REST API - diff schema',
     port: ':8085',
     source: 'SUPPLIER_B_REST',
     icon: <Globe size={16} />
@@ -53,7 +53,7 @@ const SupplierHealth = ({ products }) => {
         gap: '8px',
         marginBottom: '16px'
       }}>
-        <Activity size={14} color="#64748b" />
+        <Workflow size={14} color="#64748b" />
         <p className="section-title" style={{ marginBottom: 0 }}>
           Supplier health
         </p>

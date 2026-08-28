@@ -1,7 +1,7 @@
 import {
   Server,
   GitBranch,
-  Zap,
+  Workflow,
   Database,
   HardDrive,
   Globe,
@@ -11,7 +11,7 @@ import {
 const nodes = [
   { id: 'suppliers', label: 'Suppliers', sublabel: 'A / B / C', port: ':8085', icon: <Globe size={20} />, color: 'blue' },
   { id: 'camel', label: 'Apache Camel', sublabel: '3 routes', port: ':8081', icon: <GitBranch size={20} />, color: 'purple' },
-  { id: 'kafka', label: 'Kafka', sublabel: '10 partitions', port: ':9092', icon: <Zap size={20} />, color: 'amber' },
+  { id: 'kafka', label: 'Kafka', sublabel: '10 partitions', port: ':9092', icon: <Workflow size={20} />, color: 'amber' },
   { id: 'enrichment', label: 'Enrichment', sublabel: 'margin x 0.2', port: ':8082', icon: <Server size={20} />, color: 'teal' },
   { id: 'postgres', label: 'PostgreSQL', sublabel: 'enriched_products', port: ':5433', icon: <Database size={20} />, color: 'green' },
   { id: 'mongo', label: 'MongoDB', sublabel: 'raw_events', port: ':27017', icon: <HardDrive size={20} />, color: 'coral' },

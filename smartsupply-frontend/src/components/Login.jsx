@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogIn, AlertCircle, Zap, Database, Users } from 'lucide-react';
+import { LogIn, AlertCircle, Workflow, Database, Users } from 'lucide-react';
 import { getToken } from '../api/inventoryApi';
 
 const Logo = ({ scale = 1 }) => (
@@ -180,7 +180,7 @@ const Login = ({ onLogin }) => {
 
   const stats = [
     {
-      icon: <Zap size={14} color="#fbbf24" />,
+      icon: <Workflow size={14} color="#fbbf24" />,
       label: 'Kafka topic: product-updates',
       value: '10 partitions'
     },
@@ -281,17 +281,17 @@ const Login = ({ onLogin }) => {
               gap: '32px'
             }}
           >
-            {/* CENTERED LOGO */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'left',
-                width: '100%'
-              }}
-            >
-              <Logo scale={0.9} />
-            </div>
+            {/* LEFT-ALIGNED LOGO */}
+          <div
+            style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            width: '100%'
+            }}
+          >
+            <Logo scale={0.9} />
+          </div>
 
             <div>
               <div

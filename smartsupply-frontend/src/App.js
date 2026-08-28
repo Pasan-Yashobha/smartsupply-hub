@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   Package,
-  Activity,
+  Network,
   Clock,
   LogOut,
   RefreshCw,
@@ -135,7 +135,7 @@ const App = () => {
             change="Live from PostgreSQL"
           />
           <MetricCard
-            icon={<Activity size={18} />}
+            icon={<Network size={18} />}
             label="Events per minute"
             value={eventsPerMin}
             color="green"
